@@ -31,7 +31,20 @@ public class GildedRoseV2Test {
         assertThat(regularItem.quality).isEqualTo(9);
     }
 
-    // Multiple items
+    @Test
+    public void multipleRegularItemQualityReducesByOne() {
+        Item regularItem1 = new Item("Regular Item1", 5, 10);
+        Item regularItem2 = new Item("Regular Item2", 6, 10);
+        Item regularItem3 = new Item("Regular Item3", 9, 10);
+        Item[] items = new Item[] {regularItem1, regularItem2, regularItem3};
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
+
+        gildedRose.updateQuality();
+
+        assertThat(regularItem1.sellIn).isEqualTo(4);
+        assertThat(regularItem2.sellIn).isEqualTo(5);
+        assertThat(regularItem3.sellIn).isEqualTo(8);
+    }
 
     @Test
     public void regularItemQualityReducesByTwoAfterSellInIs0() {

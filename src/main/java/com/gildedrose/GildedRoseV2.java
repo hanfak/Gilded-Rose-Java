@@ -1,5 +1,8 @@
 package com.gildedrose;
 
+import java.util.Arrays;
+import java.util.List;
+
 class GildedRoseV2 {
     Item[] items;
 
@@ -8,7 +11,12 @@ class GildedRoseV2 {
     }
 
     public void updateQuality() {
-        items[0].sellIn -= 1;
-        items[0].quality -= 1;
+        List<Item> items = Arrays.asList(this.items);
+        items.forEach(this::reduceItemSellinAndQuality);
+    }
+
+    private void reduceItemSellinAndQuality(Item item) {
+        item.quality -= 1;
+        item.sellIn -= 1;
     }
 }
