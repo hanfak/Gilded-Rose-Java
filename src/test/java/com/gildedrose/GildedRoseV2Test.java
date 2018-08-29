@@ -7,16 +7,13 @@ import java.util.function.IntConsumer;
 import static java.util.stream.IntStream.rangeClosed;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GildedRoseTest {
-
-    private static final int MAX_QUALITY = 50;
-    private static final int MIN_QUALITY = 0;
+public class GildedRoseV2Test {
 
     @Test
     public void regularItemSellInReducesByOneDay() {
         Item regularItem = new Item("Regular Item", 5, 10);
         Item[] items = new Item[] {regularItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
@@ -27,18 +24,20 @@ public class GildedRoseTest {
     public void regularItemQualityReducesByOne() {
         Item regularItem = new Item("Regular Item", 5, 10);
         Item[] items = new Item[] {regularItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
         assertThat(regularItem.quality).isEqualTo(9);
     }
 
+    // Multiple items
+
     @Test
     public void regularItemQualityReducesByTwoAfterSellInIs0() {
         Item regularItem = new Item("Regular Item", 5, 10);
         Item[] items = new Item[] {regularItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         rangeClosed(1, 6).forEach(getIntConsumer(gildedRose));
 
@@ -49,14 +48,14 @@ public class GildedRoseTest {
     public void regularItemQualityIsNeverNegative() {
         Item regularItem = new Item("Regular Item", 5, 10);
         Item[] items = new Item[] {regularItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         rangeClosed(1, 8).forEach(getIntConsumer(gildedRose));
 
         assertThat(regularItem.quality).isEqualTo(MIN_QUALITY);
     }
 
-    private IntConsumer getIntConsumer(GildedRose gildedRose) {
+    private IntConsumer getIntConsumer(GildedRoseV2 gildedRose) {
         return x -> gildedRose.updateQuality();
     }
 
@@ -64,7 +63,7 @@ public class GildedRoseTest {
     public void agedBrieQualityIncreaseAfterEachDay() {
         Item agedBrie = new Item("Aged Brie", 5, 10);
         Item[] items = new Item[] {agedBrie};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
@@ -75,7 +74,7 @@ public class GildedRoseTest {
     public void qualityOfAnItemIsNeverMoreThan50() {
         Item agedBrie = new Item("Aged Brie", 5, 49);
         Item[] items = new Item[] {agedBrie};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
         gildedRose.updateQuality();
@@ -89,7 +88,7 @@ public class GildedRoseTest {
     public void qualityOfAnItemIsNeverMoreThan50AtTheStart() {
         Item agedBrie = new Item("Aged Brie", 5, 59);
         Item[] items = new Item[] {agedBrie};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
         gildedRose.updateQuality();
@@ -101,7 +100,7 @@ public class GildedRoseTest {
     public void blah() {
         Item agedBrie = new Item("Aged Brie", 1, 40);
         Item[] items = new Item[] {agedBrie};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
         gildedRose.updateQuality();
@@ -113,7 +112,7 @@ public class GildedRoseTest {
     public void sulfurasQualityNeverChanges() {
         Item sulfurasItem = new Item("Sulfuras, Hand of Ragnaros", 5, 10);
         Item[] items = new Item[] {sulfurasItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
@@ -124,7 +123,7 @@ public class GildedRoseTest {
     public void sulfurasSellInNeverChanges() {
         Item regularItem = new Item("Sulfuras, Hand of Ragnaros", 5, 10);
         Item[] items = new Item[] {regularItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
@@ -135,7 +134,7 @@ public class GildedRoseTest {
     public void backstagePassesIncreaseInQualityAfterEachDay() {
         Item backstagePassesItem = new Item("Backstage passes to a TAFKAL80ETC concert", 11, 10);
         Item[] items = new Item[] {backstagePassesItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
@@ -146,7 +145,7 @@ public class GildedRoseTest {
     public void backstagePassesIncreaseInQualityBy2AfterEachDayWhenLessThan10Days() {
         Item backstagePassesItem = new Item("Backstage passes to a TAFKAL80ETC concert", 9, 10);
         Item[] items = new Item[] {backstagePassesItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
@@ -157,7 +156,7 @@ public class GildedRoseTest {
     public void backstagePassesIncreaseInQualityBy2AfterEachDayWhen10Days() {
         Item backstagePassesItem = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10);
         Item[] items = new Item[] {backstagePassesItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
@@ -168,7 +167,7 @@ public class GildedRoseTest {
     public void backstagePassesIncreaseInQualityBy3AfterEachDayWhenLessThan5Days() {
         Item backstagePassesItem = new Item("Backstage passes to a TAFKAL80ETC concert", 4, 10);
         Item[] items = new Item[] {backstagePassesItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
@@ -179,7 +178,7 @@ public class GildedRoseTest {
     public void backstagePassesIncreaseInQualityBy3AfterEachDayWhen5Days() {
         Item backstagePassesItem = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10);
         Item[] items = new Item[] {backstagePassesItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
 
@@ -190,7 +189,7 @@ public class GildedRoseTest {
     public void backstagePassesIncreaseInQualityIs0WhenConcertIsOver() {
         Item backstagePassesItem = new Item("Backstage passes to a TAFKAL80ETC concert", 1, 10);
         Item[] items = new Item[] {backstagePassesItem};
-        GildedRose gildedRose = new GildedRose(items);
+        GildedRoseV2 gildedRose = new GildedRoseV2(items);
 
         gildedRose.updateQuality();
         gildedRose.updateQuality();
@@ -198,4 +197,6 @@ public class GildedRoseTest {
         assertThat(backstagePassesItem.quality).isEqualTo(0);
     }
 
+    private static final int MAX_QUALITY = 50;
+    private static final int MIN_QUALITY = 0;
 }
