@@ -17,10 +17,26 @@ class GildedRoseV2 {
 
     private void reduceItemSellinAndQuality(Item item) {
         if (item.sellIn > 0) {
-            item.quality -= 1;
+            reduceQualityByOne(item);
         } else {
-            item.quality -= 2;
+            reduceQualityByTwo(item);
         }
         item.sellIn -= 1;
+    }
+
+    private void reduceQualityByTwo(Item item) {
+        item.quality -= 2;
+        setQuailtytoZero(item);
+    }
+
+    private void reduceQualityByOne(Item item) {
+        item.quality -= 1;
+        setQuailtytoZero(item);
+    }
+
+    private void setQuailtytoZero(Item item) {
+        if (item.quality <= 0) {
+            item.quality = 0;
+        }
     }
 }
