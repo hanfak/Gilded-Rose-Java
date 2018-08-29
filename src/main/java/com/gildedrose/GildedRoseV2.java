@@ -9,5 +9,6 @@ class GildedRoseV2 {
 
     public void updateQuality() {
         items[0].sellIn -= 1;
+        items[0].quality -= 1;
     }
 }
